@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>1 Billion Clicks</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin: 20px;
+        }
+
+        h4 {
+            font-size: 18px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 18px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #win {
+            font-size: 24px;
+            color: #009900;
+        }
+    </style>
+</head>
+<body>
+    <h1>Click 1 Billion Times To Win</h1>
+    <h4 id="remain">Remain 1,000,000,000</h4>
+    <button onclick="Score()">Click Here</button>
+    <h1 id="win"></h1>
+
+    <script type="text/javascript">
+        let num = 1000000000
+
+        function Score() {
+            if (num == 0) {
+                document.getElementById('win').innerHTML = `You have proved you have nothing to do, congrats`
+            } else {
+                num -= 1
+                document.getElementById('remain').innerHTML = `Remain ${num.toLocaleString()}`
+            }
+        }
+    </script>
+</body>
+</html>

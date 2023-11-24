@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+    }
+
+    #object {
+      width: 50px;
+      height: 50px;
+      background-color: red;
+      position: absolute;
+      border-radius: 50%;
+    }
+  </style>
+</head>
+<body>
+  <div id="object"></div>
+  <script>
+    const object = document.getElementById("object");
+    let cursorX, cursorY;
+
+    // Listen for mousemove events on the document
+    document.addEventListener("mousemove", (event) => {
+      // Update the cursor's position
+      cursorX = event.clientX;
+      cursorY = event.clientY;
+    });
+
+    function moveObject() {
+      if (cursorX !== undefined && cursorY !== undefined) {
+        // Get the current position of the object
+        const objectX = object.getBoundingClientRect().left;
+        const objectY = object.getBoundingClientRect().top;
+
+        // Calculate the distance between the cursor and the object
+        const deltaX = cursorX - objectX;
+        const deltaY = cursorY - objectY;
+
+        // Update the object's position by a fraction of the distance
+        const speed = 5; // Adjust the speed as needed
+        object.style.left = objectX + speed * (deltaX / Math.hypot(deltaX, deltaY)) + "px";
+        object.style.top = objectY + speed * (deltaY / Math.hypot(deltaX, deltaY)) + "px";
+
+        // Check if the object touches the cursor
+        if (Math.hypot(deltaX, deltaY) < 25) {
+          // Close the page
+          window.close();
+        }
+      }
+
+      // Request the next animation frame
+      requestAnimationFrame(moveObject);
+    }
+
+    // Start the continuous movement
+    moveObject();
+  </script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Click Counter</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        #counter {
+            position: absolute;
+            font-size: 24px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div id="counter">0</div>
+    <script>
+        let count = 0;
+        const counter = document.getElementById("counter");
+
+        document.addEventListener("click", () => {
+            count++;
+            counter.textContent = count;
+        });
+
+        document.addEventListener("mousemove", (event) => {
+            const x = event.clientX;
+            const y = event.clientY;
+            counter.style.left = x + "px";
+            counter.style.top = y + "px";
+        });
+    </script>
+</body>
+</html>

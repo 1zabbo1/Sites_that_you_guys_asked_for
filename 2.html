@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Random Sound Player</title>
+    <style type="text/css">
+        body {
+    text-align: center;
+    font-family: Arial, sans-serif;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #2980b9;
+}
+
+audio {
+    display: none;  /* Hide the audio player */
+}
+
+    </style>
+</head>
+<body>
+    <button id="playSound">Play Random Sound</button>
+    <audio id="audioPlayer" controls>
+        <!-- This element will be hidden and used to play audio. -->
+    </audio>
+    <script>
+        // Array to store the names of your audio files.
+const audioFiles = ["pop1.wav", "pop2.wav", "pop3.wav", "pop4.wav", "pop5.wav", "pop6.wav", "pop7.wav", "pop8.wav"];
+
+// Function to play a random sound.
+function playRandomSound() {
+    const audioElement = document.getElementById("audioPlayer");
+    const randomIndex = Math.floor(Math.random() * audioFiles.length);
+    const randomSound = audioFiles[randomIndex];
+    audioElement.src = "audio/" + randomSound;
+    audioElement.play();
+}
+
+// Event listener for the button click.
+const playButton = document.getElementById("playSound");
+playButton.addEventListener("click", playRandomSound);
+
+    </script>
+</body>
+</html>

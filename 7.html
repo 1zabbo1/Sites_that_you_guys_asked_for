@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+
+        .game {
+            position: relative;
+            width: 400px;
+            height: 200px;
+            border: 2px solid #000;
+            overflow: hidden; /* To hide character when it goes outside the game box */
+        }
+
+        .platform {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 20px;
+            background-color: #333;
+        }
+
+        .character {
+            position: absolute;
+            bottom: 20px; /* Start just above the platform */
+            width: 40px;
+            height: 40px;
+            background-color: #00f;
+        }
+    </style>
+    <title>Platformer Game</title>
+</head>
+<body>
+    <div class="game">
+        <div class="platform"></div>
+        <div class="character" id="character"></div>
+    </div>
+    <script>
+        const character = document.getElementById("character");
+        let isJumping = false;
+        let gravity = 0.5;
+        let jumpStrength = 12;
+        let isMovingLeft = false;
+        let isMovingRight = false;
+        let characterX = 0;
+
+        document.addEventListener("keydown", (event) => {
+            if (event.code === "Space" && !isJumping) {
+                jump();
+            } else if (event.code === "ArrowLeft") {
+                moveLeft();
+            } else if (event.code === "ArrowRight") {
+                moveRight();
+            }
+        });
+
+        document.addEventListener("keyup", (event) => {
+            if (event.code === "ArrowLeft" || event.code === "ArrowRight") {
+                stopMoving();
+            }
+        });
+
+        function jump() {
+            if (!isJumping) {
+                isJumping = true;
+                let jumpCount = 0;
+                const jumpInterval = setInterval(() => {
+                    const characterBottom = parseInt(getComputedStyle(character).getPropertyValue("bottom"));
+                    if (jumpCount < 12) {
+                        character.style.bottom = characterBottom + jumpStrength + "px";
+                        jumpCount++;
+                    } else {
+                        clearInterval(jumpInterval);
+                        fall();
+                    }
+                }, 20);
+            }
+        }
+
+        function fall() {
+            let fallCount = 0;
+            const fallInterval = setInterval(() => {
+                const characterBottom = parseInt(getComputedStyle(character).getPropertyValue("bottom"));
+                if (fallCount < 12 && characterBottom > 20) {
+                    character.style.bottom = characterBottom - gravity + "px";
+                    fallCount++;
+                } else {
+                    clearInterval(fallInterval);
+                    character.style.bottom = "20px";
+                    isJumping = false;
+                }
+            }, 20);
+        }
+
+        function moveLeft() {
+            if (!isMovingRight) {
+                isMovingLeft = true;
+                moveCharacter();
+            }
+        }
+
+        function moveRight() {
+            if (!isMovingLeft) {
+                isMovingRight = true;
+                moveCharacter();
+            }
+        }
+
+        function stopMoving() {
+            isMovingLeft = false;
+            isMovingRight = false;
+        }
+
+        function moveCharacter() {
+            const characterLeft = parseInt(getComputedStyle(character).getPropertyValue("left"));
+            if (isMovingLeft && characterLeft > 0) {
+                character.style.left = characterLeft - 5 + "px";
+            }
+            if (isMovingRight && characterLeft + 40 < 400) {
+                character.style.left = characterLeft + 5 + "px";
+            }
+        }
+    </script>
+</body>
+</html>
